@@ -1,5 +1,5 @@
 # BlobEditor
-A simple raylib + D project.
+A simple raylib + D project. [Watch a video](https://www.youtube.com/watch?v=RIVDdXV6D-A)
 
 ### Clone this repository (with all submodules!)
 
