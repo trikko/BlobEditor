@@ -5,7 +5,7 @@ A simple raylib + D project.
 
 ```git clone --recurse-submodules https://github.com/trikko/BlobEditor```
 
-### Compile Raylib 3.0.0 dependency with RayGui
+### Compile raylib 3.0.0 (with raygui)
 
 ```
 cp ext/raygui/src/*.h ext/raylib/src
