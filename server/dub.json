@@ -1,0 +1,10 @@
+{
+	"authors": [
+		"Andrea Fontana"
+	],
+	"dependencies": {
+		"serverino": "~>0.3.0"
+	},
+	"license": "proprietary",
+	"name": "server"
+}
