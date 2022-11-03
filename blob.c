@@ -81,9 +81,6 @@ int main()
 		,45.0f, CAMERA_PERSPECTIVE
     };
 
-	// It should be enaugh
-	SetTargetFPS(60);
-
 	// Light effect shader
 	shader = LoadShader("resources/lightning.vs","resources/lightning.fs");
 
@@ -119,10 +116,6 @@ int main()
 
 void updateModel()
 {
-/*
-    static double wA = 0;
-    wA += GetFrameTime()*1.5;
- */
     static double w = 0;
     w += GetFrameTime()*(0.5+noiseSpeed*3);
 
@@ -180,10 +173,6 @@ void UpdateDrawFrame()
         else if (zoom < -7) zoom = -7;
 
         camera.position.z =  10+zoom;
-        /*
-        camera.position = (Vector3){ 5*cos(DEG2RAD*modelRotationX), cameraHeight,sin(DEG2RAD*modelRotationX)*5};
-        light.position = (Vector3){ 5*cos(DEG2RAD*(modelRotationX-30)), cameraHeight+2,sin(DEG2RAD*(-30+modelRotationX))*5};
-        */
 
         UpdateCamera(&camera);
 
@@ -200,7 +189,6 @@ void UpdateDrawFrame()
         ClearBackground((Color){25, 46,61, 255});
 
         // Draw UI
-
         {
             BeginMode3D(camera);
             DrawModel(model, (Vector3){0,0,0}, 1, colors[colorIndex]);
@@ -216,10 +204,7 @@ void UpdateDrawFrame()
         GuiWindowBox((Rectangle){GUI_SPACING, POPUP_TOP, 180, POPUP_HEIGHT}, "#198# RENDERING");
         smoothEnabled = GuiToggle((Rectangle){GUI_SPACING*2, POPUP_TOP + 24 + GUI_SPACING, 180-15*2, 30}, "#12# SMOOTH MODEL", smoothEnabled);
         colorIndex = GuiComboBox((Rectangle){GUI_SPACING*2, POPUP_TOP + 24 + GUI_SPACING*2 + 30, 180-15*2, 30},"WHITE;YELLOW;RED;GREEN;CYAN;MAGENTA;LILAC;GRAY",colorIndex);
-        /*
-        if (GuiButton((Rectangle){GUI_SPACING*2, POPUP_TOP + 24 + GUI_SPACING*2 + 30, 180-15*2, 30}, "#2# CHANGE COLOR"))
-            colorIndex = (colorIndex+1)%8;
- */
+
         // Noise
         const int NOISE_LEFT = GUI_SPACING*2+180;
         GuiWindowBox((Rectangle){NOISE_LEFT, POPUP_TOP, 180+70, POPUP_HEIGHT}, "#198# SPEEDS");
@@ -231,18 +216,14 @@ void UpdateDrawFrame()
         GuiWindowBox((Rectangle){AXIS_LEFT , POPUP_TOP, 180+70, POPUP_HEIGHT}, "#198# NOISE");
         noiseStrength = GuiSlider((Rectangle){AXIS_LEFT+ GUI_SPACING +70, POPUP_TOP + 24 + GUI_SPACING, 180-15*2, 30}, "STRENGTH: ", "", noiseStrength, 0, 1);
         noiseResolution = GuiSlider((Rectangle){AXIS_LEFT+ GUI_SPACING +70, POPUP_TOP + 24 + GUI_SPACING*2 +30, 180-15*2, 30}, "DETAILS: ", "", noiseResolution, 0, 1);
-        //noiseZ = GuiSlider((Rectangle){AXIS_LEFT+ GUI_SPACING +70, POPUP_TOP + 24 + GUI_SPACING*2 + 30, 180-15*2, 30}, "Z: ", "", noiseZ, 0, 1);
 
+        DrawText("BLOBEDITOR 2.1", 10, 10, 8, (Color){200,200,180,250});
+        DrawText("SOURCE CODE", 10, 24, 8, (Color){200,200,180,250});
 
-
-        // VISIBLE
-
-        // INVISIBLE
-
-        //DrawText(s, 190, 200, 20, (Color){200,200,100,100});
+        if (IsMouseButtonReleased(0) && GetMouseX() < 100 && GetMouseY() < 40)
+            emscripten_run_script("window.open(\"https://github.com/trikko/BlobEditor\", \"_blank\")");
 
     EndDrawing();
-    //----------------------------------------------------------------------------------
 }
 
 typedef struct {
@@ -269,7 +250,6 @@ void smooth(Mesh mesh, int enabled)
     if (enabled)
         linkedNormals = hashmap_new(sizeof(V3KeyValue), 0, 0, 0, v3_hashmap_hash, v3_hashmap_compare, NULL, NULL);
 
-	//size_t idx = 0;
     for(size_t idx = 0; idx < mesh.vertexCount * 3; idx+=9 )
 	{
         float *tri = &(mesh.vertices[idx]);
@@ -331,18 +311,8 @@ void smooth(Mesh mesh, int enabled)
 
 	}
 
-
 	if(enabled)
 	{
-/*
-		size_t iter = 0;
-        void *item;
-        while (hashmap_iter(linkedNormals, &iter, &item)) {
-            V3KeyValue *v = item;
-            v->value = Vector3Normalize(v->value);
-        }
-*/
-
         for(size_t idx = 0; idx < mesh.vertexCount * 3; idx+=3 )
         {
             float *v = &(mesh.vertices[idx]);
@@ -355,14 +325,8 @@ void smooth(Mesh mesh, int enabled)
             mesh.normals[idx+2] = norm.z;
         }
 
-
         hashmap_free(linkedNormals);
 	}
 
-	// Update normals
-	//rlUpdateMesh(mesh, 2, mesh.vertexCount);
     UpdateMeshBuffer(mesh, 2, mesh.normals, mesh.vertexCount*3*sizeof(float), 0);
 }
-
-
-//void _start() { }
