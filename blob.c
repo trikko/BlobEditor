@@ -1,5 +1,5 @@
 #include "ext/raylib/src/raylib.h"
-#include "ext/raylib/src/raygui.h"
+#include "ext/raygui/src/raygui.h"
 #include "raymath.h"
 #include <stdio.h>
 #include <stdlib.h>

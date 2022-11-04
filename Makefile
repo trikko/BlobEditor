@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := vasaro-web
 
-libraylib.a: ext/raylib/src/*.c
+libraylib.a: ext/raylib/src/*.c ext/raygui.c
 	mkdir -p build/raylib
 	emcc -c ext/raylib/src/rcore.c -o build/raylib/rcore.o -Os -DPLATFORM_WEB -DGRAPHICS_API_OPENGL_ES2
 	emcc -c ext/raylib/src/rshapes.c -o build/raylib/rshapes.o -Os -DPLATFORM_WEB -DGRAPHICS_API_OPENGL_ES2
@@ -9,7 +9,7 @@ libraylib.a: ext/raylib/src/*.c
 	emcc -c ext/raylib/src/rmodels.c -o build/raylib/rmodels.o -Os -DPLATFORM_WEB -DGRAPHICS_API_OPENGL_ES2
 	emcc -c ext/raylib/src/utils.c -o build/raylib/utils.o -Os -DPLATFORM_WEB
 	emcc -c ext/raylib/src/raudio.c -o build/raylib/raudio.o -Os -DPLATFORM_WEB
-	emcc -c ext/raylib/src/raygui.c -o build/raylib/raygui.o -Os -DPLATFORM_WEB -DRAYGUI_IMPLEMENTATION
+	emcc -c ext/raygui.c -o build/raylib/raygui.o -Os -DPLATFORM_WEB -Iext/raylib/src
 	emar rcs libraylib.a build/raylib/rcore.o build/raylib/rshapes.o build/raylib/rtextures.o build/raylib/rtext.o build/raylib/rmodels.o build/raylib/utils.o build/raylib/raudio.o build/raylib/raygui.o
 
 build/hashmap.o : hashmap.c
