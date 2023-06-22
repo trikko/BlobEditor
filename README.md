@@ -14,7 +14,7 @@ Follow instructions [here](https://emscripten.org/docs/getting_started/downloads
 ```git clone --recurse-submodules https://github.com/trikko/BlobEditor/```
 
 ## Step #3: Compile everything
-Make sure you actived the emscripten tools as explained [here](https://emscripten.org/docs/getting_started/downloads.html) if required. Let's compile the project:
+Make sure you activated the emscripten tools as explained [here](https://emscripten.org/docs/getting_started/downloads.html) if required. Let's compile the project:
 ```
 cd BlobEditor
 make
